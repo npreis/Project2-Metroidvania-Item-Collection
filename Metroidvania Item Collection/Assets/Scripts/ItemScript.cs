@@ -16,7 +16,7 @@ public class ItemScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        itemCheck.gameObject.GetComponent<MasterItemCheckScript>();
+        itemCheck = gameObject.GetComponent<MasterItemCheckScript>();
     }
 
     // Update is called once per frame

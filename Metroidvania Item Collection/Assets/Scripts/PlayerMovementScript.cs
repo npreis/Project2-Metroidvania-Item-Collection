@@ -10,13 +10,18 @@ public class PlayerMovementScript : MonoBehaviour
     public float jumpForce = 350f;
     bool isGrounded = false;
     bool shouldJump = false;
+    bool shouldDoubleJump = false;
+    bool hasDoubleJumped = false;
     public LayerMask ground;
     public Transform groundCheck;
+
+    MasterItemCheckScript itemCheck;
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody = gameObject.GetComponent<Rigidbody>();
+        itemCheck = gameObject.GetComponent<MasterItemCheckScript>();
     }
 
     // Update is called once per frame
@@ -39,6 +44,10 @@ public class PlayerMovementScript : MonoBehaviour
         {
             shouldJump = true;
         }
+        if (Input.GetKeyDown(KeyCode.Space) && !isGrounded && itemCheck.canDoubleJump)
+        {
+            shouldDoubleJump = true;
+        }
     }
 
     void Move()
@@ -48,7 +57,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     void CheckJump()
     {
-        if (shouldJump)
+        if (shouldJump || shouldDoubleJump)
         {
             Jump();
         }
@@ -56,8 +65,29 @@ public class PlayerMovementScript : MonoBehaviour
 
     void Jump()
     {
-        shouldJump = false;
-        myRigidbody.AddForce(Vector3.up * jumpForce);
+        if(itemCheck.canDoubleJump)
+        {
+            if(!isGrounded)
+            {
+                if(!hasDoubleJumped)
+                {
+                    myRigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+                    shouldDoubleJump = false;
+                    myRigidbody.AddForce(Vector3.up * jumpForce);
+                    hasDoubleJumped = true;
+                }
+            }
+            else
+            {
+                shouldJump = false;
+                myRigidbody.AddForce(Vector3.up * jumpForce);
+            }
+        }
+        else
+        {
+            shouldJump = false;
+            myRigidbody.AddForce(Vector3.up * jumpForce);
+        }
     }
 
     void CheckGround()
@@ -70,6 +100,7 @@ public class PlayerMovementScript : MonoBehaviour
         else
         {
             isGrounded = true;
+            hasDoubleJumped = false;
         }
     }
 }
