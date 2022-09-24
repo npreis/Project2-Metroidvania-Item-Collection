@@ -13,15 +13,30 @@ public class ItemScript : MonoBehaviour
     };
 
     public MasterItemCheckScript itemCheck;
+    public Item itemType;
+    public GameObject collectible;
     // Start is called before the first frame update
     void Start()
     {
         itemCheck = gameObject.GetComponent<MasterItemCheckScript>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void ItemActivate()
     {
-        
+        switch(itemType)
+        {
+            case (Item.DOUBLE_JUMP):
+                itemCheck.canDoubleJump = true;
+                Destroy(collectible);
+                break;
+                
+            case (Item.AIR_DASH):
+                itemCheck.canDash = true;
+                break;
+
+            case (Item.WALL_JUMP):
+                itemCheck.canWallJump = true;
+                break;
+        }
     }
 }
