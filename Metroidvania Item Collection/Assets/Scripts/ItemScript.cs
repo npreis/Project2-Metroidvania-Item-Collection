@@ -18,10 +18,10 @@ public class ItemScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        itemCheck = gameObject.GetComponent<MasterItemCheckScript>();
+        itemCheck.gameObject.GetComponent<MasterItemCheckScript>();
     }
 
-    void ItemActivate()
+    public void ItemActivate(GameObject item)
     {
         switch(itemType)
         {

@@ -345,6 +345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemCheck: {fileID: 2101709665}
   itemType: 1
+  collectible: {fileID: 722655532}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,6 +517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canCollect: 0
+  item: {fileID: 0}
 --- !u!1 &1945061491
 GameObject:
   m_ObjectHideFlags: 0
