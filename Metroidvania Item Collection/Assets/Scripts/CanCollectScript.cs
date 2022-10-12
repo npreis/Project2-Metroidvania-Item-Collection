@@ -10,7 +10,6 @@ public class CanCollectScript : MonoBehaviour
     void Start()
     {
         canCollect = false;
-        //item = gameObject.GetComponent<ItemScript>();
     }
 
     private void Update()
@@ -23,7 +22,6 @@ public class CanCollectScript : MonoBehaviour
         if(other.gameObject.tag == "Collectible")
         {
             canCollect = true;
-            //item.gameObject.GetComponent<ItemScript>();
             item = other.gameObject.GetComponent<ItemScript>();
         }
     }

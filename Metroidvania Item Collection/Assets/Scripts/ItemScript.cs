@@ -51,10 +51,12 @@ public class ItemScript : MonoBehaviour
                 
             case (Item.AIR_DASH):
                 itemCheck.canDash = true;
+                Destroy(collectible);
                 break;
 
             case (Item.WALL_JUMP):
                 itemCheck.canWallJump = true;
+                Destroy(collectible);
                 break;
 
             case (Item.HEALTH_UPGRADE):
