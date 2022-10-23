@@ -8,14 +8,20 @@ public class PlayerMovementScript : MonoBehaviour
     public float xSpeed = 5f;
     Rigidbody myRigidbody;
     public float jumpForce = 350f;
-    bool isGrounded = false;
+    public bool isGrounded = false;
+    public bool isRWalled = false;
+    public bool isLWalled = false;
     bool shouldJump = false;
     bool shouldDoubleJump = false;
     bool hasDoubleJumped = false;
     bool shouldDash = false;
     bool hasDashed = false;
+    bool shouldWallJump = false;
     public LayerMask ground;
+    public LayerMask wall;
     public Transform groundCheck;
+    public Transform rWallCheck;
+    public Transform lWallCheck;
 
     MasterItemCheckScript itemCheck;
     private KeyCode lastKeyHit;
@@ -122,10 +128,11 @@ public class PlayerMovementScript : MonoBehaviour
 
     void Dash()
     {
-        //myRigidbody.velocity = Vector3.zero;
+        myRigidbody.velocity = Vector3.zero;
         if(lastKeyHit == KeyCode.D)
         {
             myRigidbody.velocity = Vector3.right * dashSpeed;
+
 
         }
         else if(lastKeyHit == KeyCode.A)
@@ -135,18 +142,17 @@ public class PlayerMovementScript : MonoBehaviour
         shouldDash = false;
         hasDashed = true;
 
-        while(dashTime >= 0)
+        if(dashTime >= 0)
         {
             dashTime -= Time.deltaTime;
-            myRigidbody.velocity = myRigidbody.velocity;
+            Dash();
         }
         dashTime = startDashTime;
-        //myRigidbody.velocity = Vector3.zero;
     }
 
     void CheckGround()
     {
-        Collider[] coll = Physics.OverlapSphere(groundCheck.position, 1f, ground);
+        Collider[] coll = Physics.OverlapSphere(groundCheck.position, 0.1f, ground);
         if (coll.Length == 0)
         {
             isGrounded = false;
@@ -156,6 +162,32 @@ public class PlayerMovementScript : MonoBehaviour
             isGrounded = true;
             hasDoubleJumped = false;
             hasDashed = false;
+        }
+    }
+
+    void CheckWalls()
+    {
+        Collider[] coll1 = Physics.OverlapSphere(rWallCheck.position, 0.1f, wall);
+        Collider[] coll2 = Physics.OverlapSphere(lWallCheck.position, 0.1f, wall);
+
+        if(coll1.Length == 0 && coll2.Length == 0)
+        {
+            isRWalled = false;
+            isLWalled = false;
+        }
+        else
+        {
+            shouldDoubleJump = true;
+            shouldDash = true;
+
+            if(coll1.Length != 0)
+            {
+                isRWalled = true;
+            }
+            if(coll2.Length != 0)
+            {
+                isLWalled = true;
+            }
         }
     }
 }
