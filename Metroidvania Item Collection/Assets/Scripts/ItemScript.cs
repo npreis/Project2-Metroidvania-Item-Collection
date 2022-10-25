@@ -26,15 +26,19 @@ public class ItemScript : MonoBehaviour
         health.gameObject.GetComponent<PlayerHealthScript>();
 
         healthPool = FindObjectsOfType<RenderMaxHPScript>();
+        playerHealth = FindObjectsOfType<RenderCurrHPScript>();
 
-        foreach(RenderMaxHPScript hp in healthPool)
+        RenderHealth();
+    }
+
+    void RenderHealth()
+    {
+        foreach (RenderMaxHPScript hp in healthPool)
         {
             hp.RenderHP(health.maxHealth);
         }
 
-        playerHealth = FindObjectsOfType<RenderCurrHPScript>();
-
-        foreach(RenderCurrHPScript hp in playerHealth)
+        foreach (RenderCurrHPScript hp in playerHealth)
         {
             hp.RenderHP(health.currHealth);
         }
@@ -63,15 +67,7 @@ public class ItemScript : MonoBehaviour
                 health.maxHealth++;
                 health.currHealth = health.maxHealth;
 
-                foreach (RenderMaxHPScript hp in healthPool)
-                {
-                    hp.RenderHP(health.maxHealth);
-                }
-
-                foreach (RenderCurrHPScript hp in playerHealth)
-                {
-                    hp.RenderHP(health.currHealth);
-                }
+                RenderHealth();
 
                 Destroy(collectible);
                 break;
