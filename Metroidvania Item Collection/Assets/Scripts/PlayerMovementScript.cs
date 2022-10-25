@@ -138,7 +138,6 @@ public class PlayerMovementScript : MonoBehaviour
 
     void Dash()
     {
-        //myRigidbody.velocity = Vector3.zero;
         if(lastKeyHit == KeyCode.D)
         {
             myRigidbody.velocity = Vector3.right * dashSpeed;
@@ -172,12 +171,13 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if(isLWalled)
         {
-
+            myRigidbody.AddForce(new Vector3(5.0f, 0.25f) * jumpForce);
         }
         if(isRWalled)
         {
-
+            myRigidbody.AddForce(new Vector3(-5.0f, 0.25f) * jumpForce);
         }
+        shouldWallJump = false;
     }
 
     void CheckGround()

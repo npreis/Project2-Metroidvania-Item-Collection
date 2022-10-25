@@ -1027,7 +1027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemCheck: {fileID: 2101709665}
-  itemType: 3
+  itemType: 2
   collectible: {fileID: 722655532}
   health: {fileID: 2101709666}
   healthPool: []
@@ -1503,7 +1503,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1556236029}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.82, y: 5.08, z: 0}
+  m_LocalPosition: {x: 15.82, y: 5.08, z: 0}
   m_LocalScale: {x: 1, y: 8.718484, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2055,6 +2055,8 @@ MonoBehaviour:
   xSpeed: 5
   jumpForce: 350
   isGrounded: 0
+  isRWalled: 0
+  isLWalled: 0
   ground:
     serializedVersion: 2
     m_Bits: 64
