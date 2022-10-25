@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CanCollectScript : MonoBehaviour
 {
     public bool canCollect;
     public ItemScript item;
+    public Text textPopup;
     // Start is called before the first frame update
     void Start()
     {
         canCollect = false;
+        textPopup.text = "";
     }
 
     private void Update()
@@ -23,6 +26,7 @@ public class CanCollectScript : MonoBehaviour
         {
             canCollect = true;
             item = other.gameObject.GetComponent<ItemScript>();
+            textPopup.text = "E";
         }
     }
 
@@ -32,6 +36,7 @@ public class CanCollectScript : MonoBehaviour
         {
             canCollect = false;
             item = null;
+            textPopup.text = "";
         }
     }
 
@@ -40,6 +45,7 @@ public class CanCollectScript : MonoBehaviour
         if(canCollect && Input.GetKeyDown(KeyCode.E))
         {
             item.ItemActivate(item.gameObject);
+            textPopup.text = "";
         }
     }
 }

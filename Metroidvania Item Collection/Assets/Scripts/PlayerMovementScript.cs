@@ -171,11 +171,11 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if(isLWalled)
         {
-            myRigidbody.AddForce(new Vector3(5.0f, 0.25f) * jumpForce);
+            myRigidbody.AddForce(new Vector3(5.0f, 1.0f) * jumpForce);
         }
         if(isRWalled)
         {
-            myRigidbody.AddForce(new Vector3(-5.0f, 0.25f) * jumpForce);
+            myRigidbody.AddForce(new Vector3(-5.0f, 1.0f) * jumpForce);
         }
         shouldWallJump = false;
     }
