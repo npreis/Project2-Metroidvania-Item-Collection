@@ -47,9 +47,13 @@ public class PlayerMovementScript : MonoBehaviour
     void FixedUpdate()
     {
         Move();
+
         CheckJump();
+        CheckWallJump();
         CheckDash();
+
         CheckGround();
+        CheckWalls();
     }
 
     void CheckInput()
@@ -67,20 +71,26 @@ public class PlayerMovementScript : MonoBehaviour
         {
             shouldDash = true;
         }
+        if(Input.GetKeyDown(KeyCode.Space) && itemCheck.canWallJump && (isRWalled || isLWalled))
+        {
+            shouldWallJump = true;
+        }
     }
 
     void Move()
     {
-        myRigidbody.velocity = new Vector3(xMove, myRigidbody.velocity.y, 0);
-        if(myRigidbody.velocity.x > 0.0)
+        if(!shouldDash)
         {
-            lastKeyHit = KeyCode.D;
+            myRigidbody.velocity = new Vector3(xMove, myRigidbody.velocity.y, 0);
+            if (myRigidbody.velocity.x > 0.0)
+            {
+                lastKeyHit = KeyCode.D;
+            }
+            else if (myRigidbody.velocity.x < 0.0)
+            {
+                lastKeyHit = KeyCode.A;
+            }
         }
-        else if (myRigidbody.velocity.x < 0.0)
-        {
-            lastKeyHit = KeyCode.A;
-        }
-
     }
 
     void CheckJump()
@@ -128,7 +138,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     void Dash()
     {
-        myRigidbody.velocity = Vector3.zero;
+        //myRigidbody.velocity = Vector3.zero;
         if(lastKeyHit == KeyCode.D)
         {
             myRigidbody.velocity = Vector3.right * dashSpeed;
@@ -139,15 +149,35 @@ public class PlayerMovementScript : MonoBehaviour
         {
             myRigidbody.velocity = Vector3.left * dashSpeed;
         }
-        shouldDash = false;
-        hasDashed = true;
 
-        if(dashTime >= 0)
+        dashTime -= Time.deltaTime;
+
+        if (dashTime <= 0)
         {
-            dashTime -= Time.deltaTime;
-            Dash();
+            shouldDash = false;
+            hasDashed = true;
+            dashTime = startDashTime;
         }
-        dashTime = startDashTime;
+    }
+
+    void CheckWallJump()
+    {
+        if(shouldWallJump)
+        {
+            WallJump();
+        }
+    }
+
+    void WallJump()
+    {
+        if(isLWalled)
+        {
+
+        }
+        if(isRWalled)
+        {
+
+        }
     }
 
     void CheckGround()
@@ -177,8 +207,8 @@ public class PlayerMovementScript : MonoBehaviour
         }
         else
         {
-            shouldDoubleJump = true;
-            shouldDash = true;
+            hasDoubleJumped = false;
+            hasDashed = false;
 
             if(coll1.Length != 0)
             {
