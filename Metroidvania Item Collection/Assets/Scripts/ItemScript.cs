@@ -16,6 +16,7 @@ public class ItemScript : MonoBehaviour
     public Item itemType;
     public GameObject collectible;
     public PlayerHealthScript health;
+    public TutorialPopUpManagerScript tutorialManager;
 
     public RenderMaxHPScript[] healthPool;
     public RenderCurrHPScript[] playerHealth;
@@ -24,6 +25,7 @@ public class ItemScript : MonoBehaviour
     {
         itemCheck.gameObject.GetComponent<MasterItemCheckScript>();
         health.gameObject.GetComponent<PlayerHealthScript>();
+        tutorialManager.GetComponent<TutorialPopUpManagerScript>();
 
         healthPool = FindObjectsOfType<RenderMaxHPScript>();
         playerHealth = FindObjectsOfType<RenderCurrHPScript>();
@@ -51,16 +53,19 @@ public class ItemScript : MonoBehaviour
             case (Item.DOUBLE_JUMP):
                 itemCheck.canDoubleJump = true;
                 Destroy(collectible);
+                tutorialManager.Unlock("Double Jump");
                 break;
                 
             case (Item.AIR_DASH):
                 itemCheck.canDash = true;
                 Destroy(collectible);
+                tutorialManager.Unlock("Dash");
                 break;
 
             case (Item.WALL_JUMP):
                 itemCheck.canWallJump = true;
                 Destroy(collectible);
+                tutorialManager.Unlock("Wall Jump");
                 break;
 
             case (Item.HEALTH_UPGRADE):
@@ -70,6 +75,7 @@ public class ItemScript : MonoBehaviour
                 RenderHealth();
 
                 Destroy(collectible);
+                tutorialManager.Unlock("Health Upgrade");
                 break;
         }
     }
